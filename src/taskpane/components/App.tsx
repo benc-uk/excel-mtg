@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { DefaultButton, ProgressIndicator } from '@fluentui/react'
+import { DefaultButton, ProgressIndicator, PrimaryButton, Text } from '@fluentui/react'
 import Splash from './Splash'
 import { MagicCard } from '../../lib/types'
 import { lookupCard } from '../../lib/api'
@@ -18,9 +18,12 @@ export interface AppState {
 }
 
 export default class App extends React.Component<AppProps, AppState> {
+  private cancelLookup: boolean
+
   constructor(props, context) {
     super(props, context)
     this.state = {}
+    this.cancelLookup = false
   }
 
   componentDidMount() {
@@ -32,6 +35,7 @@ export default class App extends React.Component<AppProps, AppState> {
 
   click = async () => {
     try {
+      this.cancelLookup = false
       await Excel.run(async (context) => {
         const range = context.workbook.getSelectedRange()
 
@@ -43,7 +47,6 @@ export default class App extends React.Component<AppProps, AppState> {
           inProgress: true,
         })
 
-        const entities = []
         for (let i = 0; i < range.text.length; i++) {
           const cardName = range.text[i][0] as string
           try {
@@ -53,18 +56,20 @@ export default class App extends React.Component<AppProps, AppState> {
 
             const card = await lookupCard(cardName)
             if (!card) {
-              throw new Error('Card not found')
+              continue
             }
 
-            const cardEntity = cardToEntity(card)
-            entities.push([cardEntity])
+            if (this.cancelLookup) {
+              break
+            }
+
+            range.getCell(i, 0).valuesAsJson = [[cardToEntity(card)]]
+            await context.sync()
           } catch (error) {
-            //console.error(error)
-            entities.push([{ type: Excel.CellValueType.string, basicValue: cardName }])
+            console.error(error)
           }
         }
 
-        range.valuesAsJson = entities
         this.setState({
           inProgress: false,
           percentageDone: 0.0,
@@ -90,13 +95,25 @@ export default class App extends React.Component<AppProps, AppState> {
 
     return (
       <main className="ms-welcome__main">
-        <DefaultButton text="Lookup Card Names" onClick={this.click} disabled={this.state.inProgress} />
+        <Text>Select one or more cells containing card names, then click the button</Text>
+        <hr></hr>
+        <PrimaryButton text="Lookup Card Names" onClick={this.click} disabled={this.state.inProgress} />
+
         {this.state.inProgress && (
-          <ProgressIndicator
-            label="Looking up cards"
-            description="Please wait..."
-            percentComplete={this.state.percentageDone}
-          />
+          <div>
+            <ProgressIndicator
+              label="Looking up cards"
+              description="Please wait..."
+              percentComplete={this.state.percentageDone}
+            />
+
+            <DefaultButton
+              text="Cancel"
+              onClick={() => {
+                this.cancelLookup = true
+              }}
+            />
+          </div>
         )}
       </main>
     )
@@ -284,6 +301,11 @@ function cardToEntity(card: MagicCard): Excel.EntityCellValue {
     entity.properties['Image'] = {
       type: Excel.CellValueType.webImage,
       address: card.imageUrl.replace('http://', 'https://'),
+    }
+  } else {
+    entity.properties['Image'] = {
+      type: Excel.CellValueType.webImage,
+      address: 'https://static.wikia.nocookie.net/mtgsalvation_gamepedia/images/f/f8/Magic_card_back.jpg',
     }
   }
 

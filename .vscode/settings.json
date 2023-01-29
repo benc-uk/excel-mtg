@@ -1,8 +1,14 @@
 {
-    "eslint.validate": [
-      "javascript",
-      "javascriptreact",
-      "typescript"
-    ]
-  }
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript"
+  ],
+  // run prettier on save
+  "editor.formatOnSave": true,
+  // run eslint on save
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+}
   

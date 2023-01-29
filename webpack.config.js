@@ -7,11 +7,10 @@ const webpack = require("webpack");
 require("dotenv").config();
 
 const urlDev = "https://localhost:3000/";
-let urlProd = process.env["PROD_URL"];
+let urlProd = process.env["DEPLOYED_URL"];
 if (!urlProd) {
-  throw new Error("PROD_URL environment variable is not set, edit .env and try again");
+  throw new Error("DEPLOYED_URL environment variable is not set, update .env and try again");
 }
-// add trailing slash
 if (!urlProd.endsWith("/")) {
   urlProd += "/";
 }
@@ -25,18 +24,22 @@ module.exports = async (env, options) => {
   const dev = options.mode === "development";
   const config = {
     devtool: "source-map",
+
     entry: {
       polyfill: ["core-js/stable", "regenerator-runtime/runtime"],
       vendor: ["react", "react-dom", "core-js", "@fluentui/react"],
       taskpane: ["react-hot-loader/patch", "./src/taskpane/index.tsx", "./src/taskpane/taskpane.html"],
       commands: "./src/commands/commands.ts",
     },
+
     output: {
       clean: true,
     },
+
     resolve: {
       extensions: [".ts", ".tsx", ".html", ".js"],
     },
+
     module: {
       rules: [
         {
@@ -68,6 +71,7 @@ module.exports = async (env, options) => {
         },
       ],
     },
+
     plugins: [
       new CopyWebpackPlugin({
         patterns: [
@@ -92,20 +96,24 @@ module.exports = async (env, options) => {
           },
         ],
       }),
+
       new HtmlWebpackPlugin({
         filename: "taskpane.html",
         template: "./src/taskpane/taskpane.html",
         chunks: ["taskpane", "vendor", "polyfills"],
       }),
+
       new HtmlWebpackPlugin({
         filename: "commands.html",
         template: "./src/commands/commands.html",
         chunks: ["commands"],
       }),
+
       new webpack.ProvidePlugin({
         Promise: ["es6-promise", "Promise"],
       }),
     ],
+
     devServer: {
       hot: true,
       host: "0.0.0.0",

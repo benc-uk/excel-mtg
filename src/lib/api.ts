@@ -16,10 +16,13 @@ export async function lookupCard(name: string): Promise<MagicCard> {
     throw new Error(resp.statusText)
   }
 
-  const allCards = await resp.json()
+  let allCards = await resp.json()
 
-  for (const card of allCards.cards) {
+  for (const card of allCards.cards as MagicCard[]) {
     if (card.name === name) {
+      if (card.set == '4BB') {
+        continue
+      }
       console.log(`### Located card: ${card.name} (${card.setName})`)
       console.log(card)
       return card as MagicCard
