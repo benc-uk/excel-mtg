@@ -5,15 +5,15 @@
   xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
   <Id>402f2401-fec3-4f65-bc9e-37d6eaaf9e52</Id>
   <Version>1.0.0.0</Version>
-  <ProviderName>Contoso</ProviderName>
+  <ProviderName>Ben Coleman</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="MTG Add In" />
   <Description DefaultValue="Integration demo for MTG cards" />
   <IconUrl DefaultValue="https://localhost:3000/assets/mtg.png" />
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/mtg.png" />
-  <SupportUrl DefaultValue="https://www.contoso.com/help" />
+  <SupportUrl DefaultValue="https://benc.dev" />
   <AppDomains>
-    <AppDomain>https://www.contoso.com</AppDomain>
+    <AppDomain>https://benc.dev</AppDomain>
   </AppDomains>
   <Hosts>
     <Host Name="Workbook" />

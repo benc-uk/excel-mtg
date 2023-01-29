@@ -1,0 +1,15 @@
+{
+  "$schema": "https://aka.ms/azure/static-web-apps-cli/schema",
+  "configurations": {
+    "excel-mtg": {
+      "appLocation": ".",
+      "outputLocation": "dist",
+      "appBuildCommand": "npm run build",
+      "run": "npm run dev-server",
+      "appDevserverUrl": "http://localhost:3000",
+      "appName": "mtgaddin",
+      "resourceGroup": "temp",
+      "env": "production"
+    }
+  }
+}

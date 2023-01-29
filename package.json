@@ -46,6 +46,8 @@
     "acorn": "^8.5.0",
     "babel-loader": "^8.2.2",
     "copy-webpack-plugin": "^9.0.1",
+    "dotenv": "^16.0.3",
+    "dotenv-webpack": "^8.0.1",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-office-addins": "^2.1.4",
     "eslint-plugin-react": "^7.28.0",
