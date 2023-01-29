@@ -1,6 +1,7 @@
 # Magic The Gathering API Excel Add In
 
-This is an Excel add-in for enriching spreadsheets using Data Types and extracting information about Magic The Gathering cards. 
+This is an Excel add-in for enriching spreadsheets using Data Types and extracting information about Magic The Gathering cards.  
+Created purely to learn Excel add-in development 
 
 It uses the REST API of https://docs.magicthegathering.io/
 
@@ -47,3 +48,20 @@ Once all the pre-reqs are done
 
 - Make sure the dev server still running, if not start it in a separate terminal with `npm run dev-server`
 - Run `npm run start:web`
+
+# Deploying to Azure
+
+Quick notes:
+
+- Create a new Static Web App `az staticwebapp create -n MyStaticAppName -g MyExistingRg`
+- [Install the SWA CLI](https://azure.github.io/static-web-apps-cli/docs/use/install)
+- Edit `swa-cli.config.json` and change `appName` and `resourceGroup` to match what you have deployed.
+- Run `npm run build`
+- Run `swa deploy --no-use-keychain`
+  
+Adding and using deployed add-in
+
+- Open new Excel web document, https://www.office.com/launch/excel?auth=2 
+- Insert > Add-Ins > Manage My Add-Ins > Upload My Add-In
+- Browse to the `manifest.xml` in the dist folder NOT the one in the repo root
+- Use the new add-in :)
