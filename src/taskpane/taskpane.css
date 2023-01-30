@@ -16,6 +16,11 @@ ul {
   padding: 0;
 }
 
+/* weird hack as component gets wrapped in an extra div without our control */
+*[class^='body-'] {
+  height: 97vh;
+}
+
 .ms-welcome__header {
   padding: 20px;
   padding-bottom: 30px;
@@ -28,6 +33,7 @@ ul {
 }
 
 .ms-welcome__main {
+  height: 100%;
   display: -webkit-flex;
   display: flex;
   -webkit-flex-direction: column;

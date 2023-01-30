@@ -5,7 +5,7 @@ import { ThemeProvider } from '@fluentui/react'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-/* global Office, module, require */
+/* global Office */
 
 initializeIcons()
 
@@ -20,6 +20,7 @@ const render = (Component) => {
         <Component title={title} isOfficeInitialized={isOfficeInitialized} />
       </ThemeProvider>
     </AppContainer>,
+
     document.getElementById('container')
   )
 }
@@ -30,9 +31,9 @@ Office.onReady(() => {
   render(App)
 })
 
-if ((module as any).hot) {
-  ;(module as any).hot.accept('./components/App', () => {
-    const NextApp = require('./components/App').default
-    render(NextApp)
-  })
-}
+// if ((module as any).hot) {
+//   ;(module as any).hot.accept('./components/App', () => {
+//     const NextApp = require('./components/App').default
+//     render(NextApp)
+//   })
+// }

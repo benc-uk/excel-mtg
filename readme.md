@@ -1,12 +1,13 @@
 # Magic The Gathering API Excel Add In
 
 This is an Excel add-in for enriching spreadsheets using Data Types and extracting information about Magic The Gathering cards.  
-Created purely to learn Excel add-in development 
+Created purely to learn Excel add-in development, this has dubious real world applicability! 
 
 It uses the REST API of https://docs.magicthegathering.io/
 
-![screen 1](./docs/Screenshot%202023-01-29%20170142.png)
-![screen 2](./docs/Screenshot%202023-01-29%20170253.png)
+![screen 3](./docs/Screenshot%202023-01-30%20093832.png)
+![screen 1](./docs/Screenshot%202023-01-30%20093613.png)
+![screen 2](./docs/Screenshot%202023-01-30%20093758.png)
 
 # Developement with WSL
 
